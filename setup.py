@@ -5,9 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="python-qa",
-    version="0.0.1",
+    version="0.0.1a",
     author="Starkov E.G.",
     author_email="Starkov.Ev.Ge@gmail.com",
+    license="Apache 2.0",
     description="Simplify the QA of your product",
     long_description=long_description,
     long_description_content_type="text/markdown",
