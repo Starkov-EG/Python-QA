@@ -15,10 +15,16 @@ class Decorators:
             def wrapper(*args, **kwargs):
                 f_args = func_parameters_dic(func, *args, **kwargs)  # ToDo: to realize
                 data = f_args.get("data", None)
+                params = f_args.get("params", None)
                 if is_attrs_class(data):
                     data = cattr.unstructure(data)
                     f_args.pop("data")
                     f_args["json"] = json.dumps(data)
+                    args = f_args.values()
+                if is_attrs_class(params):
+                    params = cattr.unstructure(params)
+                    f_args.pop("params")
+                    f_args["params"] = json.dumps(params)
                     args = f_args.values()
                 resp = func(*args, **kwargs)
                 if response_type and resp.status_code // 100 == 2:
