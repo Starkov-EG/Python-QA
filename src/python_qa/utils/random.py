@@ -90,7 +90,7 @@ class Randomer:
 
     def random_object(self, t: T, fields: typing.List[str] = [],
                       ignore_fields: bool = False,
-                      save_defaults: bool = True,
+                      save_defaults: bool = False,
                       **kwargs
                       ) -> T:
         data = {}
@@ -106,7 +106,7 @@ class Randomer:
                 if (
                         (f_name in fields and ignore_fields) or
                         (save_defaults and has_default) or
-                        (f_name not in fields and not ignore_fields)
+                        (f_name not in fields and not ignore_fields and fields)
                 ):
                     data[f_name] = field.default if has_default else None
                     continue
@@ -132,7 +132,7 @@ class Randomer:
                 if (
                         (f_name in fields and ignore_fields) or
                         (save_defaults and has_default) or
-                        (f_name not in fields and not ignore_fields)
+                        (f_name not in fields and not ignore_fields and fields)
                 ):
                     data[f_name] = None
                     if has_default:
