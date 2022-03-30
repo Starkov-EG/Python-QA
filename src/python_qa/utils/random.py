@@ -90,7 +90,7 @@ class Randomer:
 
     def random_object(self, t: T, fields: typing.List[str] = [],
                       ignore_fields: bool = False,
-                      save_defaults: bool = False,
+                      save_defaults: bool = True,
                       **kwargs
                       ) -> T:
         data = {}
@@ -99,13 +99,14 @@ class Randomer:
         elif is_attrs_class(t):
             for field in attr.fields(t):
                 f_name = field.name
-                has_default = field.default is not attr.NOTHING
+                has_default = field.default is not attr.NOTHING if save_defaults else None
                 if f_name in kwargs:
                     data[f_name] = kwargs[f_name]
                     continue
                 if (
                         (f_name in fields and ignore_fields) or
-                        (save_defaults and has_default)
+                        (save_defaults and has_default) or
+                        (f_name not in fields and not ignore_fields)
                 ):
                     data[f_name] = field.default if has_default else None
                     continue
@@ -124,13 +125,14 @@ class Randomer:
                 has_default = (
                     field.default is not MISSING
                     or field.default_factory is not MISSING
-                )
+                ) if save_defaults else None
                 if f_name in kwargs:
                     data[f_name] = kwargs[f_name]
                     continue
                 if (
                         (f_name in fields and ignore_fields) or
-                        (save_defaults and has_default)
+                        (save_defaults and has_default) or
+                        (f_name not in fields and not ignore_fields)
                 ):
                     data[f_name] = None
                     if has_default:
