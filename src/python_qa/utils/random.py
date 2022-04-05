@@ -2,9 +2,12 @@ import inspect
 import typing
 import random as rnd
 from dataclasses import is_dataclass, MISSING
+import datetime
 
 import attr
 from faker import Faker
+
+from ..utils.data import DataGenerate
 from ..logging.logging import Logging
 from ..utils.classes import is_attrs_class, is_union_type, has_args, is_tuple, is_sequence
 from ..types.base_types import *
@@ -76,15 +79,25 @@ class Randomer:
             URI: fake.uri,
             Email: fake.email,
             Username: fake.user_name,
-            FileName: fake.first_name,
-            LastName: fake.last_name,
-            MiddleName: fake.middle_name,
-            Patronymic: fake.middle_name,
+            FirstName: fake.first_name_male,
+            LastName: fake.last_name_male,
+            MiddleName: fake.middle_name_male,
+            Password: fake.password,
+            Patronymic: fake.middle_name_male,
             PhoneNumber: fake.phone_number,
             Job: fake.job,
             Paragraph: fake.paragraph,
             BusinessInn: fake.businesses_inn,
             IndividualInn: fake.individuals_inn,
+            BusinessOgrn: fake.businesses_ogrn,
+            IndividualOgrn: fake.individuals_ogrn,
+            Kpp: fake.kpp,
+            TimeStamp: lambda: fake.unix_time(
+                start_datetime=(
+                    datetime.date.today() - datetime.timedelta(days=30)
+                )
+            ),
+            MongoId: DataGenerate.mongo_id,
         }
         self.add_types(types)
 
