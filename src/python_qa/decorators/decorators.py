@@ -37,6 +37,11 @@ class Decorators:
                 if is_attrs_class(data):
                     data = cattr.unstructure(data)
                     f_args["data"] = json.dumps(data)
+                elif isinstance(data, list) and is_attrs_class(data[0]):
+                    list_data = []
+                    for d in data:
+                        list_data.append(cattr.unstructure(d))
+                    f_args["data"] = json.dumps(list_data)
                 if is_attrs_class(params):
                     f_args["params"] = cattr.unstructure(params)
                 args = f_args.values()
