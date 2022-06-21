@@ -37,13 +37,25 @@ class Decorators:
                 if is_attrs_class(data):
                     data = cattr.unstructure(data)
                     f_args["data"] = json.dumps(data)
+                elif isinstance(data, list) and is_attrs_class(data[0]):
+                    list_data = []
+                    for d in data:
+                        list_data.append(cattr.unstructure(d))
+                    f_args["data"] = json.dumps(list_data)
                 if is_attrs_class(params):
                     f_args["params"] = cattr.unstructure(params)
                 args = f_args.values()
                 resp = func(*args, **kwargs)
                 if response_type and resp.status_code // 100 == 2:
+                    untyped = resp.json()
                     try:
-                        resp.typed = cattr.structure(resp.json(), response_type)
+                        if isinstance(untyped, list):
+                            typed = []
+                            for item in untyped:
+                                typed.append(cattr.structure(item, response_type))
+                            resp.typed = typed
+                        else:
+                            resp.typed = cattr.structure(untyped, response_type)
                     except (TypeError, ValueError, KeyError) as exp:
                         fields = attr.fields_dict(response_type)
                         throw_response_missmatch(fields, resp, exp)
