@@ -7,7 +7,7 @@ from python_qa.logging.logging import Logging
 
 
 def verify_response(resp: Response, ok_status: Union[int, List[int]] = 200) -> Response:
-    func = inspect.stack()[2][3]
+    func = inspect.stack()[1][3]
     if isinstance(ok_status, int):
         ok_status = [ok_status]
     if resp.status_code not in ok_status:
@@ -21,3 +21,6 @@ def verify_response(resp: Response, ok_status: Union[int, List[int]] = 200) -> R
             f"Verified response: function {func} code {resp.status_code}"
         )
     return resp
+
+
+vr = verify_response
