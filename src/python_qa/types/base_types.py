@@ -56,6 +56,7 @@ IndividualOgrn = str_type("BusinessOgrn")
 Kpp = str_type("Kpp")
 TimeStamp = int_type("TimeStamp")
 MongoId = str_type("MongoId")
+Uuid = str_type("Uuid")
 
 
 class BaseEnum(Enum):

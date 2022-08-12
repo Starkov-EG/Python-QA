@@ -1,6 +1,7 @@
 import inspect
 import typing
 import random as rnd
+import uuid
 from dataclasses import is_dataclass, MISSING
 import datetime
 
@@ -98,6 +99,7 @@ class Randomer:
                 )
             ),
             MongoId: DataGenerate.mongo_id,
+            Uuid: lambda: str(uuid.uuid4()),
         }
         self.add_types(types)
 
