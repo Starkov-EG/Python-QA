@@ -10,11 +10,16 @@ class BaseLogging:
 
     def log(self, data):
         try:
-            content = json.dumps(data.json(), indent=4, ensure_ascii=False)
+            content = json.dumps(data.json(), indent=4, ensure_ascii=False, sort_keys=True)
         except ValueError:
-            content = data.text
-        if type(data.request.body) is str:
-            body = json.dumps(json.loads(data.request.body), indent=4, ensure_ascii=False)
+            content = data.text if len(data.text) < 1000 else f"\tPart of the big response data is:\n{data.text[:100]}\n..."
+        if isinstance(data.request.body, str):
+            body = json.dumps(json.loads(data.request.body), indent=4, ensure_ascii=False, sort_keys=True)
+        elif isinstance(data.request.body, bytes) and len(data.request.body) < 100000:
+            try:
+                body = json.dumps(json.loads(data.request.body.decode('UTF-8')), indent=4, ensure_ascii=False, sort_keys=True)
+            except ValueError:
+                body = "*** Request data has to big or non text content in the body for logging ***"
         else:
             body = "-"
         Logging.logger.log(

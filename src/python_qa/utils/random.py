@@ -100,6 +100,8 @@ class Randomer:
             ),
             MongoId: DataGenerate.mongo_id,
             Uuid: lambda: str(uuid.uuid4()),
+            Number: lambda: str(rnd.randint(0, 1000000)),
+            Money: lambda: rnd.randint(0, 100000000)/100,
         }
         self.add_types(types)
 

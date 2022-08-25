@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="python-qa",
-    version="0.0.5",
+    version="0.0.6",
     author="Starkov E.G.",
     author_email="Starkov.Ev.Ge@gmail.com",
     license="Apache 2.0",
@@ -13,6 +13,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Starkov-EG/python-qa",
+    install_requires=['gitpython'],
     classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Quality Assurance",
