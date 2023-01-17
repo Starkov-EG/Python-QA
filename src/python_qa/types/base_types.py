@@ -8,12 +8,17 @@ from python_qa.logging.logging import Logging
 
 T = TypeVar("T")
 
+
 def str_type(name: str):
     return type(name, (str,), {})
 
 
 def int_type(name: str):
     return type(name, (int,), {})
+
+
+def float_type(name: str):
+    return type(name, (float,), {})
 
 
 Address = str_type("Address")
@@ -57,6 +62,8 @@ Kpp = str_type("Kpp")
 TimeStamp = int_type("TimeStamp")
 MongoId = str_type("MongoId")
 Uuid = str_type("Uuid")
+Money = float_type("Money")
+Number = int_type("Number")
 
 
 class BaseEnum(Enum):
