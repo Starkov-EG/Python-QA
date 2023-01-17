@@ -25,18 +25,20 @@ def wait_for_condition(
     wait = wait_for_condition
 
 
-def wait_for_creation(
+def wait_for_status(
         func: typing.Callable, status: int = 200, wait_iter: int = 5, wait_step: int = 0.5
 ):
     iter = 0
+    res = None
     while iter < wait_iter:
         res = func()
         if res.status_code == status:
             return res
         iter += 1
         time.sleep(wait_step)
+    return res
 
-    wc = wait_for_creation
+    ws = wait_for_status
 
 
 def wait_for(fn: typing.Callable, wait_time: int = 15, wait_step: float = 0.2):
@@ -46,3 +48,9 @@ def wait_for(fn: typing.Callable, wait_time: int = 15, wait_step: float = 0.2):
         time.sleep(wait_step)
         res = fn()
     return res
+
+
+def wait_for_server_start(url: str, wait_time: int = 5):
+    ...
+
+    wait_start = wait_for_server_start
