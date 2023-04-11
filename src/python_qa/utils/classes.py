@@ -35,3 +35,10 @@ class StructDict:
         for key, value in self.__dict__.items():
             if isinstance(value, dict):
                 self.__dict__[key] = StructDict(**value)
+
+    def to_dict(self, str_values: bool = False):
+        if str_values:
+            for key, value in self.__dict__.items():
+                if not isinstance(value, str):
+                    self.__dict__[key] = str(value)
+        return self.__dict__
