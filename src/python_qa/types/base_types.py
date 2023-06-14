@@ -1,3 +1,4 @@
+from datetime import datetime
 from dataclasses import dataclass
 from enum import Enum
 from random import choice
@@ -19,6 +20,10 @@ def int_type(name: str):
 
 def float_type(name: str):
     return type(name, (float,), {})
+
+
+def datetime_type(name: str):
+    return type(name, (datetime,), {})
 
 
 Address = str_type("Address")
