@@ -37,3 +37,12 @@ def wait_for_creation(
         time.sleep(wait_step)
 
     wc = wait_for_creation
+
+
+def wait_for(fn: typing.Callable, wait_time: int = 15, wait_step: float = 0.2):
+    start_time = time.time()
+    res = fn()
+    while not res and start_time + wait_time >= time.time():
+        time.sleep(wait_step)
+        res = fn()
+    return res
