@@ -30,7 +30,7 @@ class BasePage:
             time.sleep(wait_step)
 
     def open(self, url: str = "/"):
-        logger.info(f"Opening the page f{url}")
+        logger.info(f"Opening the page {url}")
         self.d.get(self.host + url)
         self._wait_page_loaded()
 
