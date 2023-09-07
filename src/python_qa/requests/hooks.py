@@ -14,7 +14,10 @@ class BaseLogging:
         except ValueError:
             content = data.text if len(data.text) < 1000 else f"\tPart of the big response data is:\n{data.text[:100]}\n..."
         if isinstance(data.request.body, str):
-            body = json.dumps(json.loads(data.request.body), indent=4, ensure_ascii=False, sort_keys=True)
+            try:
+                body = json.dumps(json.loads(data.request.body), indent=4, ensure_ascii=False, sort_keys=True)
+            except json.decoder.JSONDecodeError:
+                body = data.request.body
         elif isinstance(data.request.body, bytes) and len(data.request.body) < 100000:
             try:
                 body = json.dumps(json.loads(data.request.body.decode('UTF-8')), indent=4, ensure_ascii=False, sort_keys=True)
@@ -29,9 +32,9 @@ class BaseLogging:
 
 class LoggingResponseInfo(BaseLogging):
     log_format = (
-        "Request: {data.request.method} {data.url} "
+        "\nRequest: {data.request.method} {data.url} "
         "headers {data.request.headers}\n"
-        "{body}\n"
+        "Request body:\n{body}\n\n"
         "Response: {data.status_code}\n"
         "{content}"
     )
