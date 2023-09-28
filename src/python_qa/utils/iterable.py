@@ -20,7 +20,7 @@ def select_items(items: List[dict], inverse: bool = False, **kwargs) -> List:
 
 
 def select_item(items: List[dict], inverse: bool = False, **kwargs) -> dict:
-    res = select_items(items, inverse, kwargs)
+    res = select_items(items, inverse, **kwargs)
     if res:
         return res[0]
     return {}
