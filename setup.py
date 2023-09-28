@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="python-qa",
-    version="0.0.7",
+    version="0.0.8",
     author="Starkov E.G.",
     author_email="Starkov.Ev.Ge@gmail.com",
     license="Apache 2.0",
