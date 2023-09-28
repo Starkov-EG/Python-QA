@@ -1,11 +1,11 @@
-from typing import Callable, List, Iterable
+from typing import Callable, List, Iterable, Any
 
 
 def filtered(func: Callable, iterable: Iterable):
     return type(iterable)(filter(func, iterable))
 
 
-def select_items(items: List[dict | object], inverse: bool = False, **kwargs) -> List:
+def select_items(items: Iterable, inverse: bool = False, **kwargs) -> List:
     res = []
     if kwargs:
         for item in items:
@@ -20,8 +20,7 @@ def select_items(items: List[dict | object], inverse: bool = False, **kwargs) ->
     return res
 
 
-def select_item(items: List[dict], inverse: bool = False, **kwargs) -> dict:
+def select_item(items: Iterable, inverse: bool = False, **kwargs) -> Any | None:
     res = select_items(items, inverse, **kwargs)
     if res:
         return res[0]
-    return {}

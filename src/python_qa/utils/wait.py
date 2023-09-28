@@ -1,7 +1,11 @@
 import time
 import typing
 
+import requests
+
 from python_qa.logging.logging import Logging
+
+logger = Logging.logger
 
 
 def wait_for_condition(
@@ -19,7 +23,7 @@ def wait_for_condition(
             if expected_condition(res):
                 return res
         except Exception as e:
-            Logging.logger.warning(f"An error: {e} occurred while waiting\nContinue waiting ...")
+            logger.warning(f"An error: {e} occurred while waiting\nContinue waiting ...")
     return res
 
     wait = wait_for_condition
@@ -50,7 +54,16 @@ def wait_for(fn: typing.Callable, wait_time: int = 15, wait_step: float = 0.2):
     return res
 
 
-def wait_for_server_start(url: str, wait_time: int = 5):
-    ...
+def wait_for_server_start(url: str, wait_time: int = 5, wait_step: float = 0.2):
+    resp = None
+    start_time = time.time()
+    while not resp and start_time + wait_time >= time.time():
+        logger.info("waiting for the server to start ...")
+        try:
+            resp = requests.get(url)
+            return
+        except Exception:
+            time.sleep(wait_step)
+    raise Exception(f"Failed to connect to server: {url}")
 
     wait_start = wait_for_server_start
