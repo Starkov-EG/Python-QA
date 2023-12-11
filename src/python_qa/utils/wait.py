@@ -26,7 +26,8 @@ def wait_for_condition(
             logger.warning(f"An error: {e} occurred while waiting\nContinue waiting ...")
     return res
 
-    wait = wait_for_condition
+
+wait = wait_for_condition
 
 
 def wait_for_status(
@@ -42,7 +43,8 @@ def wait_for_status(
         time.sleep(wait_step)
     return res
 
-    ws = wait_for_status
+
+wfs = wait_for_status
 
 
 def wait_for(fn: typing.Callable, wait_time: int = 15, wait_step: float = 0.2):
@@ -66,4 +68,5 @@ def wait_for_server_start(url: str, wait_time: int = 5, wait_step: float = 0.2):
             time.sleep(wait_step)
     raise Exception(f"Failed to connect to server: {url}")
 
-    wait_start = wait_for_server_start
+
+wait_start = wait_for_server_start

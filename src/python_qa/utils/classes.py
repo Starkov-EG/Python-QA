@@ -29,6 +29,28 @@ def is_union_type(obj):
     )
 
 
+def get_values(obj: object, *val_names, deep: bool = False):
+    if val_names:
+        values = {}
+        for k in val_names:
+            values[k] = []
+            obj_v = obj.get(k) if hasattr(obj, "get") else getattr(obj, k, None)
+            if obj_v:
+                values[k].append(obj_v)
+            if deep:
+                if isinstance(obj, dict):
+                    for obj_k, obj_v in obj.items():
+                        values[k].extend(get_values(obj_v, *val_names, deep=True)[k])
+                elif isinstance(obj, list):
+                    for item in obj:
+                        values[k].extend(get_values(item, *val_names, deep=True)[k])
+                else:
+                    obj_dic = getattr(obj, "__dict__", {})
+                    if obj_dic:
+                        values[k].extend(get_values(obj_dic, *val_names, deep=True)[k])
+    return values
+
+
 class StructDict:
     def __init__(self, **kwargs):
         self.__dict__.update(**kwargs)
