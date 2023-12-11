@@ -1,6 +1,6 @@
 from typing import Callable, List, Iterable, Any
 
-from utils.classes import get_values
+from python_qa.utils.classes import get_values
 
 
 def filtered(func: Callable, iterable: Iterable):

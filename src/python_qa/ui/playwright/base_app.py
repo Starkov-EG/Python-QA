@@ -1,8 +1,10 @@
-from common.logging import logger
+from python_qa.logging.logging import Logging
 
-from utils.wait import wait_for
+from python_qa.utils.wait import wait_for
 
-from utils.iterable import filtered
+from python_qa.utils.iterable import filtered
+
+logger = Logging.logger
 
 
 class BaseApp:
